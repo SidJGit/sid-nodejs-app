@@ -1,0 +1,37 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nodejs-app-service
+spec:
+  selector:
+    bb: nodejs-app
+  ports:
+    - # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 4000
+      # Port accessible outside cluster
+      nodePort: 30004
+  type: LoadBalancer
+ 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      bb: nodejs-app
+  template:
+    metadata:
+      labels:
+        bb: nodejs-app
+    spec:
+      containers:
+        - name: nodejs-app-container 
+          image: siddockerchamp/nodejs-app
+          ports:
+            - containerPort: 4000

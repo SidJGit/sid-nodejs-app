@@ -1,0 +1,4 @@
+**/node_modules/
+**/ngin-sService.yaml
+**/ngin-xdeploy.yaml
+**/nodejs-app-deployment.yaml
