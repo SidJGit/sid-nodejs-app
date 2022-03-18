@@ -9,9 +9,10 @@ variables:
   dockerId: 'siddockerchamp'
 
 steps:
-- script: docker build -f Dockerfile -t $(imageName) .
 - script: docker login -u $(dockerId) -p $(pswd)
+- script: docker build -f Dockerfile -t $(imageName) .
 - script: docker push $(imageName)
+- script: az aks get-credentials --resource-group SidRG14 --name sidtestaks
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
